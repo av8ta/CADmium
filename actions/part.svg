@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="96"
+   height="96"
+   version="1.1"
+   viewBox="0 0 25.4 25.4"
+   id="svg834"
+   sodipodi:docname="part.svg"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs838" />
+  <sodipodi:namedview
+     id="namedview836"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="6.3140824"
+     inkscape:cx="46.958526"
+     inkscape:cy="48.700663"
+     inkscape:window-width="1312"
+     inkscape:window-height="847"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg834" />
+  <path
+     d="M 5.1393985,11.767543 3.1101517,9.7382962 v 9.5317318 l 1.9978273,2.335109 z"
+     fill="#f9f9f9"
+     id="path826"
+     style="stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="m 21.445759,5.9486912 -1.89784,-1.8978404 -10.2252171,0.05414 2.3119351,1.8436809 h 9.811209"
+     fill="#f9f9f9"
+     id="path830"
+     style="stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 5.107979,21.605137 H 21.462306"
+     id="path1117"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 21.445759,5.9486912 V 21.553908"
+     id="path1119" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 11.634637,5.9486712 V 11.770393"
+     id="path1121"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 5.1393985,11.767543 H 11.606053"
+     id="path1123" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 9.3227019,4.1049904 9.2783762,9.7382962"
+     id="path1125"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 3.1101517,9.7382962 H 9.2783758 L 11.606053,11.767543"
+     id="path1127" />
+  <path
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 5.1393985,11.767543 6.4952385,0.0029 V 5.9486712 h 9.811209 l 0.01646,15.6564658 H 5.107979 Z"
+     id="path2104" />
+  <path
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 9.3227019,4.1049904 9.2783759,9.7382962 11.634637,11.770393 V 5.9486712 Z"
+     id="path2594" />
+  <path
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.650956;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 3.1101517,9.7382962 5.1393985,11.767543 H 11.606053 L 9.2783758,9.7382962 Z"
+     id="path2755" />
+</svg>
