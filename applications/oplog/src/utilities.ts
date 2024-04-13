@@ -15,46 +15,24 @@ export const calcHash = async (data: any): Promise<Hash> => {
 async function createEntity(command: GeomCommand, options: { geomData?: GeomData; geomParams?: GeomParams; nonce?: Nonce } = {}): Promise<Hash> {
 	const { geomData, geomParams, nonce } = options
 	const data = canonicalise([command, geomData, geomParams, nonce].filter((x) => x !== undefined))
+	console.info("[createEntity] [canon]", "data:", data)
 	const hash = await calcHash(data)
 	storeData(hash, data)
 	return hash
 }
 
-// todo curry these perhaps? or use an options object? don't need so many functions that are basically the same!
-export function createNewEntity(command: GeomCommand, nonce: Nonce): Promise<Hash> {
-	return createEntity(command, { nonce })
-}
-export function createGeomEntity(command: GeomCommand, geomData: GeomData): Promise<Hash> {
-	return createEntity(command, { geomData })
-}
-export function createNewGeomEntity(command: GeomCommand, geomData: GeomData, nonce: Nonce): Promise<Hash> {
-	return createEntity(command, { geomData, nonce })
-}
-export function createParamEntity(command: GeomCommand, geomParams: GeomParams): Promise<Hash> {
-	return createEntity(command, { geomParams })
-}
-export function createNewParamEntity(command: GeomCommand, geomParams: GeomParams, nonce: Nonce): Promise<Hash> {
-	return createEntity(command, { geomParams, nonce })
-}
-export function createGeomAndParamEntity(command: GeomCommand, geomData: GeomData, geomParams: GeomParams): Promise<Hash> {
-	return createEntity(command, { geomData, geomParams })
-}
-export function createNewGeomAndParamEntity(command: GeomCommand, geomData: GeomData, geomParams: GeomParams, nonce: Nonce): Promise<Hash> {
-	return createEntity(command, { geomData, geomParams, nonce })
-}
-
-async function createNewGeomEntityHash(command: GeomCommand, options?: { id: Option<Hash>; nonce: Option<Nonce> }) {
+async function createNewGeomEntityHash(command: GeomCommand, options: { geomData?: GeomData; id?: Option<Hash>; nonce?: Option<Nonce> } = {}) {
 	let nonce =
-		options?.nonce.match({
+		options?.nonce?.match({
 			some: (nonce) => nonce,
 			none: () => self.crypto.randomUUID()
 		}) ?? self.crypto.randomUUID()
 
 	let id =
-		(await options?.id.match({
+		(await options?.id?.match({
 			some: (id) => Promise.resolve(id),
-			none: async () => await createNewEntity(command, nonce)
-		})) ?? (await createNewEntity(command, nonce))
+			none: async () => await createEntity(command, {...options, nonce})
+		})) ?? (await createEntity(command, {...options, nonce}))
 
 	return Promise.resolve([id, nonce])
 }
@@ -65,27 +43,36 @@ export async function createPlaneFn(
 	geometry: PlaneGeom,
 	options?: { id: Option<Hash>; nonce: Option<Nonce>; targets: Option<Hash[]>; context: Option<any> }
 ): Promise<CreatePlane> {
-	const [id, nonce] = await createNewGeomEntityHash("CreatePlane", options)
+	const [idPlane, noncePlane] = await createNewGeomEntityHash("CreatePlane", options)
 
-	// console.log("[createPlaneFn]", "id:", id, "nonce", nonce)
+	const [idPlaneGeom, noncePlaneGeom] = await createNewGeomEntityHash("CreatePlane", options)
 
-	return {
-		id,
+	const createPlaneGeom: CreatePlane = {
+		id: idPlaneGeom,
 		command: "CreatePlane",
 		data: {
 			plane: geometry
 		},
-		targets: options?.targets ?? None,
+		// targets: options?.targets ?? None,
+		targets: Some([idPlane]),
 		context: options?.context ?? None,
-		nonce: Some(nonce)
+		nonce: Some(noncePlaneGeom)
 	}
+	return createPlaneGeom
 }
 
 export function storeData(hash: Hash, value: any): void {
 	// if (browser) {
 	;(globalThis as any).process = (globalThis as any).process ? (globalThis as any).process : {}
 	;(globalThis as any).process.store = (globalThis as any).process.store ? (globalThis as any).process.store : {}
-	;(globalThis as any).process.store[hash] = value
+	;(globalThis as any).process.store.oplog = (globalThis as any).process.store.oplog ? (globalThis as any).process.store.oplog : []
+
+	// deduplicate: if hash is not in the store then store it!
+	if (!(globalThis as any).process.store[hash]) {
+		;(globalThis as any).process.store[hash] = value // store hash & value in map for fast retrieval
+		;(globalThis as any).process.store.oplog.push([hash, value]) // append hash & value to store oplog
+	}
+
 	console.log("[store]", (globalThis as any).process.store)
 }
 
