@@ -1,17 +1,25 @@
 {
-  "name": "oplog",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "format": "prettier --plugin-search-dir . --write .",
-    "prettier": "^3.2.5"
-  },
-  "devDependencies": {
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
-  }
+	"name": "oplog",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"clean": "rm -rf node_modules",
+		"format": "prettier --plugin-search-dir . --write .",
+		"types:guard": "ts-auto-guard --export-all src/types.ts"
+	},
+	"devDependencies": {
+		"prettier": "^3.2.5",
+		"ts-auto-guard": "^4.2.0",
+		"typescript": "^5.2.2",
+		"vite": "^5.2.0"
+	},
+	"dependencies": {
+		"@thames/monads": "^0.6.2",
+		"callbag-common": "^0.1.8",
+		"callbag-state": "^0.2.5"
+	}
 }

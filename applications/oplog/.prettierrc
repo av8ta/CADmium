@@ -1,0 +1,15 @@
+{
+	"useTabs": true,
+	"singleQuote": false,
+	"trailingComma": "none",
+	"printWidth": 180,
+	"semi": false,
+	"overrides": [
+		{
+			"files": "*.js",
+			"options": {
+				"semi": false
+			}
+		}
+	]
+}
