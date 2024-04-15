@@ -1,9 +1,11 @@
-import { Option, Some, None } from "@thames/monads"
+import { Option } from "@thames/monads"
+
+type NonUndefined = {} | null
 
 export type Hash = string
 export type Nonce = Hash // 32 bits of random bytes is fine when implemented. edit: used a uuid, nice and simple
 
-export type Vector3D = [x: number, y: number, z: number]
+export type Vector3D = [x: number, y: number, z: number] // prettier-ignore
 export type  Point3D = [x: number, y: number, z: number] // prettier-ignore
 export type      Ray = [Point3D, Vector3D] // prettier-ignore
 
@@ -12,6 +14,19 @@ export type OpCommand = "Create" | "Describe" | "Attach" | "Detach"
 
 export type GeomData = PlaneGeom // | SketchGeom | ... | ... etc
 export type GeomParams = PlaneParams
+
+export type PlaneGeom = {
+	origin: Point3D
+	primary: Vector3D
+	secondary: Vector3D
+	tertiary: Vector3D
+}
+export type PlaneParams = {
+	width: number
+	height: number
+	normal: Ray // ? normal in center of width and height ? length & direction of vector sets z-index relative to PlaneGeomData
+}
+export type PlaneData = (PlaneGeom & PlaneParams) | {}
 
 export type Pubkey = string
 
@@ -42,14 +57,20 @@ export type UserMessage<Author, Intent> = {
 	intent: Intent
 }
 
-export type Create<Command, Data> = {
+export type Data = PlaneGeom | PlaneParams | {}
+
+export type Create<Command, Data extends NonUndefined> = {
 	id: Hash
-	nonce: Option<Nonce>
+	nonce: Nonce
+	// nonce: Option<Nonce>
 
 	command: Command
-	data: Data
-	targets: Option<Hash[]>
-	context: Option<any>
+	data: Data | {}
+	targets: Hash[]
+	context: any
+	// data: Option<Data> | Option<{}>
+	// targets: Option<Hash[]>
+	// context: Option<any>
 }
 
 export type CreatePlane = Create<
@@ -105,19 +126,6 @@ export type OpData = any
 export type WorldGeom = Ray
 export type WorldGeomShift = Vector3D
 
-export type PlaneGeom = {
-	origin: Point3D
-	primary: Vector3D
-	secondary: Vector3D
-	tertiary: Vector3D
-}
-export type PlaneParams = {
-	width: number
-	height: number
-	normal: Ray // ? normal in center of width and height ? length & direction of vector sets z-index relative to PlaneGeomData
-}
-export type PlaneData = PlaneGeom & PlaneParams
-
 export type CurveData = Line | Arc | Circle | Nurbs | Rectangle | Polygon | PolyCurve
 export type Line = [Point3D, Point3D] | [Point3D, Vector3D] | [Vector3D, Point3D] | [Vector3D, Vector3D] // hmmm. no, incorrect! todo fix. all curve types should have a start and end as the universal interface.
 
@@ -136,31 +144,3 @@ export type WorldParams = any
 export type SketchParams = any
 export type ExtrusionParams = any
 export type WorldShiftParams = any
-
-// ============================================================================================================================
-
-// type Option<T> = None | Some<T>
-// type None = {
-// 	_tag: "None"
-// }
-// type Some<T> = {
-// 	_tag: "Some"
-// 	readonly value: T
-// }
-
-// export type CreateEntityHash<GeomCommand, CadData> = (args: Geometry<GeomCommand, CadData>) => Hash
-// export type CreateOpHash<OpCommand, CadData> = (args: Operation<OpCommand, CadData>) => Hash
-
-// export type GeomData = WorldGeom | WorldGeomShift | PlaneGeom
-// export type GeomData = WorldGeom | WorldGeomShift | PlaneGeom | SketchGeom | CurveGeom | ExtrusionGeom
-// export type GeomParams = WorldParams | WorldShiftParams | PlaneParams | SketchParams | CurveParams | ExtrusionParams
-
-// export type Geometry<GeomCommand, GeomData> = {
-// 	hash: CreateGeomEntityHash<GeomCommand, GeomData>
-// 	data: GeomData
-// }
-
-// export type Operation<OpType, OpData> = {
-// 	hash: CreateEntityHash<OpType, OpData>
-// 	data: OpData
-// }

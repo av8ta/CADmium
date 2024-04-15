@@ -6,8 +6,10 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
+		"build:dev": "tsc && vite build --minify false",
+		"build:dev:sourcemap": "tsc && vite build --minify false --sourcemap inline",
 		"preview": "vite preview",
-		"clean": "rm -rf node_modules",
+		"clean": "rm -rf node_modules dist",
 		"format": "prettier --plugin-search-dir . --write .",
 		"types:guard": "ts-auto-guard --export-all src/types.ts"
 	},
@@ -20,6 +22,8 @@
 	"dependencies": {
 		"@thames/monads": "^0.6.2",
 		"callbag-common": "^0.1.8",
-		"callbag-state": "^0.2.5"
+		"callbag-pairwise": "^1.0.1",
+		"callbag-state": "^0.2.5",
+		"strict-callbag": "^1.0.0"
 	}
 }
