@@ -103,7 +103,7 @@ test("create plane params using generic function", async () => {
 		height: 50
 	}
 
-	const planeWithParams = await createPlane("CreatePlane", { id: None, nonce: Some("abc"), data: Some(planeParams), targets: None, context: None })
+	const planeWithParams = await create("CreatePlane", { id: None, nonce: Some("abc"), data: Some(planeParams), targets: None, context: None })
 
 	const expected = messagelog[2]
 
