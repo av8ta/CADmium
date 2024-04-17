@@ -1,5 +1,5 @@
 import { None, Some } from "@thames/monads"
-import { createPlaneFn } from "./api"
+import { createPlane } from "./api"
 
 export async function getMessages() {
 	const planeGeom = {
@@ -14,9 +14,9 @@ export async function getMessages() {
 		height: 50
 	}
 
-	const planeEntity = await createPlaneFn({ id: None, nonce: Some("abc"), data: None, targets: None, context: None })
-	const planeWithGeom = await createPlaneFn({ id: None, nonce: Some("abcde"), data: Some(planeGeom), targets: None, context: None })
-	const planeWithParams = await createPlaneFn({ id: None, nonce: Some("abcdefg"), data: Some(planeParams), targets: None, context: None })
+	const planeEntity = await createPlane("CreatePlane", { id: None, nonce: Some("abc"), data: None, targets: None, context: None })
+	const planeWithGeom = await createPlane("CreatePlane", { id: None, nonce: Some("abcde"), data: Some(planeGeom), targets: None, context: None })
+	const planeWithParams = await createPlane("CreatePlane", { id: None, nonce: Some("abcdefg"), data: Some(planeParams), targets: None, context: None })
 
 	console.info("========>", [planeEntity, planeWithGeom, planeWithParams])
 
