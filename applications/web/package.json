@@ -10,7 +10,7 @@
 		"preview": "vite preview",
 		"test": "pnpm test:integration && pnpm test:unit",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write .",
+		"format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,json,svelte}\"",
 		"svelte-check": "svelte-check",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
