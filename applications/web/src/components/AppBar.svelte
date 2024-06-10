@@ -8,7 +8,6 @@
   import DiscordLogo from "phosphor-svelte/lib/DiscordLogo"
   import GithubLogo from "phosphor-svelte/lib/GithubLogo"
   import type {WithTarget} from "shared/types"
-  import {isProject} from "shared/typeGuards"
   import {base} from "../base"
   import {renameProject} from "shared/projectUtils"
 

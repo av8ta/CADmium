@@ -48,7 +48,7 @@
   <FeatureHistory {setCameraFocus} />
 </div>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="w-[12px] cursor-col-resize border-r-gray-300 border-r-2" on:mousedown={onMouseDown} />
+<div class="w-[12px] cursor-col-resize border-r-gray-300 border-r-2" on:mousedown={onMouseDown}></div>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
