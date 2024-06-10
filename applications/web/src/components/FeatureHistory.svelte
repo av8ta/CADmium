@@ -1,11 +1,11 @@
 <script lang="ts">
-  import {workbench, realization} from "shared/stores"
+  import { workbench } from "shared/stores"
   import PointFeature from "./features/Point.svelte"
   import PlaneFeature from "./features/Plane.svelte"
   import SketchFeature from "./features/Sketch.svelte"
   import ExtrusionFeature from "./features/Extrusion.svelte"
   import SolidItem from "./SolidItem.svelte"
-  import {isPoint, isPlane, isExtrusion, isSketch} from "shared/projectUtils"
+  import { isPoint, isPlane, isExtrusion, isSketch } from "shared/projectUtils"
   import type {SetCameraFocus} from "shared/types"
 
   const log = (function () { const context = "[FeatureHistory.svelte]"; const color="pink"; return Function.prototype.bind.call(console.log, console, `%c${context}`, `font-weight:bold;color:${color};`)})() // prettier-ignore
@@ -22,11 +22,10 @@
   $: partsHeight = overallHeight - height - 12
 
   $: history = $workbench.history ?? []
-  $: solids = $realization.solids ?? {}
+  $: solids = []
 
   $: $workbench, log("[$workbench]", $workbench)
   $: $workbench.history, log("[$workbench.history]", $workbench.history)
-  $: $realization, log("[$realization]", $realization)
 
   export let setCameraFocus: SetCameraFocus
 
@@ -73,7 +72,7 @@
     {/each}
   </div>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="h-[12px] cursor-row-resize border-b-2 border-b-gray-300" on:mousedown={onMouseDown} />
+  <div class="h-[12px] cursor-row-resize border-b-2 border-b-gray-300" on:mousedown={onMouseDown}></div>
   <div style="height:{partsHeight}px" class="overflow-y-auto">
     <div class="font-bold text-sm px-2 py-2">
       Solids ({solids ? Object.keys(solids).length : 0})
