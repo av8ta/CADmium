@@ -1,5 +1,4 @@
 import type {Message} from "./cadmium-api"
-
 import {workbenchIsStale, workbenchIndex, workbench, project, featureIndex, wasmProject, projectIsStale, messageHistory, workbenchSolids} from "./stores"
 import {get} from "svelte/store"
 import {Vector2, Vector3, type Vector2Like} from "three"
@@ -7,13 +6,33 @@ import type {Entity, MessageHistory, WithTarget} from "./types"
 import type {Workbench, MessageResult, Solid, Step, Point3, Plane, ISketch, StepHash} from "cadmium"
 import {isSketchActionStep} from "./stepTypeGuards"
 import {isMessage} from "./typeGuards"
+import {createDB} from "./db/db"
 
 import * as cad from "./cadmium-api"
-(window as any).cad = cad
-export { cad }
+;(window as any).cad = cad
+export {cad}
 
-// prettier-ignore
-const log = (function () { const context = "[projectUtils.ts]"; const color = "aqua"; return Function.prototype.bind.call(console.log, console, `%c${context}`, `font-weight:bold;color:${color};`) })()
+const log = (function () { const context = "[projectUtils.ts]"; const color = "aqua"; return Function.prototype.bind.call(console.log, console, `%c${context}`, `font-weight:bold;color:${color};`) })() // prettier-ignore
+
+const db = await createDB()
+
+const messages = await db.execO<{id: bigint; json: string}>("SELECT * FROM messages")
+console.log("messages from db:", messages)
+
+// give the application some time to boot up
+// then replay messages
+setTimeout(() => {
+  messages.forEach(message => {
+    log(`[db replay] message:`, message)
+    sendWasmMessage(JSON.parse(message.json), true)
+  })
+}, 1000)
+
+db.onUpdate((type, dbName, tblName, rowid) => {
+  // log(`[db.onUpdate] row ${rowid} in ${dbName}.${tblName} was ${type}`)
+})
+
+log("[projectUtils.ts] init projectUtils...")
 
 export const CIRCLE_TOLERANCE = 0.05
 
@@ -32,7 +51,7 @@ function createWrapperFunctions(originalNamespace: any, newNamespace: any) {
 export namespace bench {
   createWrapperFunctions(cad, bench)
 }
-(window as any).bench = bench
+;(window as any).bench = bench
 
 export function getWorkbenchSolids(): Solid[] {
   let wp = get(wasmProject)
@@ -47,7 +66,7 @@ export function isPoint(node: Node): node is Node & Point3 {
 export function isPlane(node: Node): node is Node & Plane {
   return "Plane" in node
 }
-export type SketchStep = Step & {result: ISketch, data: cad.WorkbenchSketchAdd }
+export type SketchStep = Step & {result: ISketch; data: cad.WorkbenchSketchAdd}
 export function isSketchStep(step: Step): step is SketchStep {
   return "WorkbenchSketchAdd" in step.data && "Sketch" in step.result
 }
@@ -63,7 +82,7 @@ export function arraysEqual(a: any[], b: any[]) {
   return true
 }
 
-export function sendWasmMessage(message: Message): MessageResult {
+export function sendWasmMessage(message: Message, isReplay = false): MessageResult {
   let wp = get(wasmProject)
   log("[sendWasmMessage] sending message:", message)
   // TODO: send_message should accept the generated Message type (cadmium-api.ts), not the cadmium Message type
@@ -79,6 +98,11 @@ export function sendWasmMessage(message: Message): MessageResult {
     throw new Error(`[sendWasmMessage] message failed: ${result.data}`)
   } else {
     workbenchIsStale.set(true)
+
+    if (!isReplay)
+      db.tx(async tx => {
+        await tx.exec(`INSERT INTO messages (json) VALUES ('${JSON.stringify(message)}')`)
+      })
   }
 
   return result

@@ -7,6 +7,7 @@
     "clean": "rimraf node_modules"
   },
   "dependencies": {
+    "@vlcn.io/crsqlite-wasm": "^0.16.0",
     "cadmium": "workspace:*",
     "svelte": "^4.2.12",
     "three": "^0.164.1"
